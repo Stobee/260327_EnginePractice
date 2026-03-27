@@ -7,6 +7,7 @@ APlayer::APlayer(int InX, int InY, char InMesh, int InHP, int InAP)
 	Mesh = InMesh;
 	HP = InHP;
 	AP = InAP;
+	ZOrder = 100;
 	
 }
 

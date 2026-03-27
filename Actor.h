@@ -10,10 +10,16 @@ class AActor
 
 	void SetActorLocation(int InX, int InY);
 
+	int GetZOrder()
+	{
+		return ZOrder;
+	}
+
 protected:
 	int X;
 	int Y;
 	char Mesh;
+	int ZOrder = 0;
 
 };
 

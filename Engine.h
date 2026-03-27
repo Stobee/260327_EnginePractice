@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Windows.h>
+
 class UWorld;
 
 class UEngine
@@ -37,6 +39,16 @@ public:
 	void Init();
 	void Term();
 	void Run();
+
+	// Renderer
+	HANDLE ScreenBufferHandle[2];
+	int ActiveScreenBufferIndex = 0;
+
+	void InitBuffer();
+	void Clear();
+	void Render(int InX, int InY, char InMesh);
+	void Flip();
+	void TermBuffer();
 };
 
 #define GEngine			UEngine::GetInstance()

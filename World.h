@@ -5,6 +5,8 @@
 #include <string>
 
 
+
+
 class UWorld
 {public:
 	UWorld();
@@ -35,5 +37,6 @@ class UWorld
 	
 protected:
 	std::vector<AActor*> Actors;
+	void Sort();
 };
 

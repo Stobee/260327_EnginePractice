@@ -8,6 +8,7 @@ ACharacter::ACharacter(int InX, int InY, char InMesh, int InHP, int InAP)
 	Mesh = InMesh;
 	HP = InHP;
 	AP = InAP;
+	ZOrder = 10;
 }
 
 ACharacter::~ACharacter()
@@ -39,6 +40,7 @@ void ACharacter::Tick()
 		X++;
 	}
 
+	UEngine::KeyboardInput = 0;
 }
 
 void ACharacter::Render()

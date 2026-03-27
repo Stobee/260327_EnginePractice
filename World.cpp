@@ -1,4 +1,5 @@
 #include "World.h"
+#include "Engine.h"
 #include "Actor.h"
 
 #include "Wall.h"
@@ -9,6 +10,8 @@
 
 #include <fstream>
 #include <string>
+#include <algorithm>
+
 
 UWorld::UWorld()
 {
@@ -35,30 +38,38 @@ void UWorld::LoadMap(std::string MapName)
 		for (int X = 0; X < Line.length(); ++X)
 		{
 			if (Line[X] == '#')
-			{
+			{	
 				SpawnActorToLocation<AWall>(X,Y);
+				SpawnActorToLocation<AFloor>(X, Y);
 			}
 			else if (Line[X] == ' ')
 			{
 				SpawnActorToLocation<AFloor>(X,Y);
 			}
 			else if (Line[X] == 'M')
-			{
+			{	
 				SpawnActorToLocation<AMonster>(X,Y);
+				SpawnActorToLocation<AFloor>(X, Y);
 			}
 			else if (Line[X] == 'G')
 			{
 				SpawnActorToLocation<AGoal>(X,Y);
+				SpawnActorToLocation<AFloor>(X, Y);
 			}
 			else if (Line[X] == 'P')
 			{
 				SpawnActorToLocation<APlayer>(X, Y);
+				SpawnActorToLocation<AFloor>(X, Y);
 			}
 			
 		}
 		Y++;
-	}
 
+	}
+	std::sort(Actors.begin(), Actors.end(),
+		[](AActor* First, AActor* Second) -> int {
+			return (First->GetZOrder() < Second->GetZOrder() ? 1 : 0);
+		});
 }
 
 
@@ -73,8 +84,29 @@ void UWorld::Tick()
 }
 void UWorld::Render()
 {
+	GEngine->Clear();
+
 	for (auto Actor : Actors)
 	{
 		Actor->Render();
+	}
+
+	GEngine->Flip();
+}
+
+
+void UWorld::Sort()
+{
+	for (int i = 0; i < Actors.size(); i++)
+	{
+		for (int j = 0; j < Actors.size(); j++)
+		{
+			if (Actors[i]->GetZOrder() < Actors[j]->GetZOrder())
+			{
+				auto Temp = Actors[i];
+				Actors[i] = Actors[j];
+				Actors[j] = Actors[i];
+			}
+		}
 	}
 }
