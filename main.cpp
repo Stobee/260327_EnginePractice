@@ -4,11 +4,8 @@
 #include "Engine.h"
 #include "World.h"
 
-#include "SDL.h"
-
-#pragma comment(lib, "SDL2")
-#pragma comment(lib, "SDL2main")
-
+#include <random>
+#include <cmath>
 
 
 using namespace std;
@@ -17,27 +14,15 @@ using namespace std;
 
 int SDL_main(int argc, char* argv[])
 {
-	return 0;
-}
-
-/*int main()
-{
-
-
-
-
+	
 	GEngine->GetInstance();
 	GEngine->GetWorld()->LoadMap("TestMap.txt");
 	GEngine->Run();
-	
+
 	delete GEngine;
-
-
-
 	
-
 	
 
 	return 0;
+}
 
-}*/

@@ -22,25 +22,35 @@ void ACharacter::BeginPlay()
 void ACharacter::Tick()
 {
 	__super::Tick();
+	SDL_Event Event = GEngine->GetEvent();
 
-	if (UEngine::KeyboardInput == 'w'|| UEngine::KeyboardInput == 'W')
+	if (Event.type == SDL_KEYDOWN)
 	{
-		Y--;
-	}
-	if (UEngine::KeyboardInput == 's'|| UEngine::KeyboardInput == 'S')
-	{
-		Y++;
-	}
-	if (UEngine::KeyboardInput == 'a' || UEngine::KeyboardInput == 'A')
-	{
-		X--;
-	}
-	if (UEngine::KeyboardInput == 'd' || UEngine::KeyboardInput == 'D')
-	{
-		X++;
-	}
+		SDL_Keycode KeyCode = Event.key.keysym.sym;
+		if (KeyCode == SDLK_w)
+		{
+			Y--;
+			// Callback
+			// Turn to std::function<void>
+		}
+		if (KeyCode == SDLK_s)
+		{
+			Y++;
+		}
+		if (KeyCode == SDLK_a)
+		{
+			X--;
+		}
+		if (KeyCode == SDLK_d)
+		{
+			X++;
+		}
+		if (KeyCode == SDLK_ESCAPE)
+		{
+			GEngine->Stop();
+		}
 
-	UEngine::KeyboardInput = 0;
+	}
 }
 
 void ACharacter::Render()

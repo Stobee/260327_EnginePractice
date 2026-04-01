@@ -8,6 +8,9 @@ AMonster::AMonster(int InX, int InY, char InMesh, int InHP, int InAP)
 	HP = InHP;
 	AP = InAP;
 	ZOrder = 50;
+	R = 255;
+	G = 255;
+	B = 0;
 }
 
 AMonster::~AMonster()

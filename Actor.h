@@ -18,6 +18,11 @@ class AActor
 protected:
 	int X;
 	int Y;
+
+	int R;
+	int G;
+	int B;
+
 	char Mesh;
 	int ZOrder = 0;
 
