@@ -1,4 +1,12 @@
 #pragma once
+
+#include <string>
+
+struct SDL_Surface;
+struct SDL_Texture;
+
+
+
 class AActor
 {public: 
 	AActor(int InX = 0, int InY = 0, char InMesh = ' ');
@@ -10,7 +18,9 @@ class AActor
 
 	void SetActorLocation(int InX, int InY);
 
-	int GetZOrder()
+	
+	
+	inline const int GetZOrder() const
 	{
 		return ZOrder;
 	}
@@ -25,6 +35,9 @@ protected:
 
 	char Mesh;
 	int ZOrder = 0;
+
+	SDL_Surface* Image;
+	SDL_Texture* Texture;
 
 };
 

@@ -30,6 +30,8 @@ void UWorld::LoadMap(std::string MapName)
 {
 	std::ifstream MapStream(MapName);
 	int Y = 0;
+	int MaxX = -1;
+	int MaxY = -1;
 
 	while (!MapStream.eof())
 	{
@@ -40,7 +42,7 @@ void UWorld::LoadMap(std::string MapName)
 			if (Line[X] == '#')
 			{	
 				SpawnActorToLocation<AWall>(X,Y);
-				SpawnActorToLocation<AFloor>(X, Y);
+				SpawnActorToLocation<AFloor>(X,Y);
 			}
 			else if (Line[X] == ' ')
 			{
@@ -49,7 +51,7 @@ void UWorld::LoadMap(std::string MapName)
 			else if (Line[X] == 'M')
 			{	
 				SpawnActorToLocation<AMonster>(X,Y);
-				SpawnActorToLocation<AFloor>(X, Y);
+				SpawnActorToLocation<AFloor>(X,Y);
 			}
 			else if (Line[X] == 'G')
 			{
@@ -61,11 +63,21 @@ void UWorld::LoadMap(std::string MapName)
 				SpawnActorToLocation<APlayer>(X, Y);
 				SpawnActorToLocation<AFloor>(X, Y);
 			}
+			if (MaxX < X + 1)
+			{
+				MaxX = X + 1;
+			}
+			
 			
 		}
 		Y++;
 
 	}
+
+	MaxY = Y;
+
+	SDL_SetWindowSize(GEngine->GetWindow(),(MaxX) * 30, MaxY * 30);
+
 	std::sort(Actors.begin(), Actors.end(),
 		[](AActor* First, AActor* Second) -> int {
 			return (First->GetZOrder() < Second->GetZOrder() ? 1 : 0);

@@ -1,4 +1,6 @@
 #include "Wall.h"
+#include "Engine.h"
+#include "ResourceManager.h"
 
 AWall::AWall(int InX, int InY, char InMesh)
 {
@@ -10,6 +12,10 @@ AWall::AWall(int InX, int InY, char InMesh)
 	R = 0;
 	G = 255;
 	B = 0;
+
+	Resource TempResource = GEngine->GetResourceManager()->LoadTexture("Assets/wall.bmp");
+	Image = TempResource.Image;
+	Texture = TempResource.Texture;
 }
 
 AWall::~AWall()
