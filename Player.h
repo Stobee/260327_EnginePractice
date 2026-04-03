@@ -1,18 +1,27 @@
 #pragma once
-#include "Actor.h"
-class APlayer : public AActor
+#include "character.h"
+
+class USpriteAnimationComponent;
+class UCollisionComponent;
+class APlayer : public ACharacter
 {public: 
 	APlayer(int X = 0, int Y = 0, char Mesh = 'P', int HP = 100, int AP = 5);
 	virtual ~APlayer();
 
-	virtual void Render() override;
+	virtual void BeginPlay() override;
 	virtual void Tick() override;
+	virtual void ReceiveHit(class AActor* Other) override;
+	virtual void ProcessBeginOverlap(class AActor* OtherActor);
+	
+	
+
+	
+	USpriteAnimationComponent* SpriteAnimationComponent;
+	UCollisionComponent* CollisionComponent;
+
+	
 
 protected:
-	int SpriteIndexX = 0;
-	int SpriteIndexY = 0;
-
-	float ElapsedTime = 0;
-	float ExecutionTime = 0.1f;
+	
 };
 

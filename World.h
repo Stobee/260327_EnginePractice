@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor.h"
+
 #include <vector>
 #include <string>
 
@@ -23,6 +24,21 @@ class UWorld
 		return NewActor;
 	}
 
+	template<typename T>
+	AActor* GetActorOfClass()
+	{
+		for (auto Actor : Actors)
+		{
+			T* Target = dynamic_cast<T*>(Actor);
+			if (Target)
+			{
+				return Target;
+			}
+		}
+
+		return nullptr;
+	}
+
 	void LoadMap(std::string MapName);
 
 	inline std::vector<AActor*>& GetAllActors()
@@ -30,7 +46,7 @@ class UWorld
 		return Actors;
 	}
 
-
+	void BeginPlay();
 	void Tick();
 	void Render();
 

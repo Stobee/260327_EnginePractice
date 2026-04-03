@@ -8,6 +8,10 @@
 #include "Monster.h"
 #include "Goal.h"
 
+#include "SpriteComponent.h"
+#include "RenderableComponent.h"
+#include "GameMode.h"
+
 #include <fstream>
 #include <string>
 #include <algorithm>
@@ -28,6 +32,8 @@ UWorld::~UWorld()
 
 void UWorld::LoadMap(std::string MapName)
 {
+	Actors.push_back(new AGameMode());
+
 	std::ifstream MapStream(MapName);
 	int Y = 0;
 	int MaxX = -1;
@@ -80,11 +86,51 @@ void UWorld::LoadMap(std::string MapName)
 
 	std::sort(Actors.begin(), Actors.end(),
 		[](AActor* First, AActor* Second) -> int {
-			return (First->GetZOrder() < Second->GetZOrder() ? 1 : 0);
+
+			USpriteComponent* FirstRenderComponent = nullptr;
+			for (auto Component : First->GetComponents())
+			{
+				FirstRenderComponent = dynamic_cast<USpriteComponent*>(Component);
+				if (FirstRenderComponent)
+				{
+					break;
+				}
+			}
+
+			if (!FirstRenderComponent)
+			{
+				return 0;
+			}
+
+			USpriteComponent* SecondRenderComponent = nullptr;
+			for (auto Component : Second->GetComponents())
+			{
+				SecondRenderComponent = dynamic_cast<USpriteComponent*>(Component);
+				if (SecondRenderComponent)
+				{
+					break;
+				}
+			}
+
+			if (!SecondRenderComponent)
+			{
+				return 0;
+			}
+
+
+
+			return (FirstRenderComponent->ZOrder < SecondRenderComponent->ZOrder ? 1 : 0);
+			//(First->GetZOrder() < Second->GetZOrder() ? 1 : 0);
 		});
 }
 
-
+void UWorld::BeginPlay()
+{
+	for (auto Actor : Actors)
+	{
+		Actor->BeginPlay();
+	}
+}
 
 void UWorld::Tick()
 {
@@ -100,7 +146,16 @@ void UWorld::Render()
 
 	for (auto Actor : Actors)
 	{
-		Actor->Render();
+		// 모든 액터 중 Render 가능한 컴포넌트를 가진 액터만 실행
+		
+		for (auto Component : Actor->GetComponents())
+		{
+			USpriteComponent* RenderComponent = dynamic_cast<USpriteComponent*>(Component);
+			if (RenderComponent)
+			{
+				RenderComponent->Render();
+			}
+		}
 	}
 
 	GEngine->Flip();
@@ -109,7 +164,7 @@ void UWorld::Render()
 
 void UWorld::Sort()
 {
-	for (int i = 0; i < Actors.size(); i++)
+	/*for (int i = 0; i < Actors.size(); i++)
 	{
 		for (int j = 0; j < Actors.size(); j++)
 		{
@@ -120,5 +175,5 @@ void UWorld::Sort()
 				Actors[j] = Actors[i];
 			}
 		}
-	}
+	}*/
 }
