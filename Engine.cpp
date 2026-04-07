@@ -28,6 +28,8 @@ void UEngine::Init()
 
 	MyRenderer = SDL_CreateRenderer(MyWindow, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 
+	MyFont = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 24);
+
 	ResourceManager = new UResourceManager();
 	bIsRunning = true;
 	InitBuffer();

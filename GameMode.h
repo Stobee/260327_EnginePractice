@@ -1,14 +1,20 @@
 #pragma once
 #include "Actor.h"
 
+struct SDL_Surface;
+struct SDL_Texture;
+
 class AGameMode : public AActor
 {public:
 	AGameMode();
 	virtual ~AGameMode();
 
-	virtual void Tick() override; // 틱 적용은 좋은 방식은 아님
+	virtual void Tick() override; 
 
 	void GameOver();
 	void GameComplete();
+
+	SDL_Surface* TextSurface;
+
 };
 

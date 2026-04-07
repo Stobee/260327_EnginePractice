@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include "SDL.h"
+#include "SDL_ttf.h"
 
 #pragma comment(lib, "SDL2")
 #pragma comment(lib, "SDL2main")
@@ -28,6 +29,8 @@ protected:
 	SDL_Window* MyWindow;
 	SDL_Renderer* MyRenderer;
 	SDL_Event MyEvent;
+	TTF_Font* MyFont;
+
 
 	UResourceManager* ResourceManager;
 
